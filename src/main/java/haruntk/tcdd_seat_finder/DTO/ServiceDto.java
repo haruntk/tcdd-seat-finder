@@ -9,6 +9,7 @@ public class ServiceDto {
     private int departureStationId;
     private int arrivalStationId;
     private LocalDateTime departureTime;
+    private LocalDateTime arrivalTime;
     private String departureStationName;
     private String arrivalStationName;
     private String cabin;

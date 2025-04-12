@@ -8,9 +8,6 @@ import haruntk.tcdd_seat_finder.DTO.ServiceResponseDto.CabinClass;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestClient;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
-import org.springframework.data.domain.Pageable;
 import java.time.LocalDateTime;
 import java.util.*;
 
@@ -35,7 +32,7 @@ public class TrainService {
 		return responseBody;
 	}
 
-	public Page<AvailableServicesDto> getAvailableServices(ServiceDto serviceDto, Pageable pageable) {
+	public List<AvailableServicesDto> getAvailableServices(ServiceDto serviceDto) {
 		List<AvailableServicesDto> availableServicesDtos = new ArrayList<>();
 		ServiceResponseDto responseBody = getTrainServices(serviceDto);
 
@@ -66,6 +63,7 @@ public class TrainService {
 					if (cabin.isEmpty() || availableSeat <= 0) {
 						continue;
 					}
+
 					List<ServiceResponseDto.TrainSegment> segments = train.segments();
 					if (segments == null || segments.isEmpty()) {
 						continue;
@@ -111,12 +109,8 @@ public class TrainService {
 				}
 			}
 		}
-		
-		int start = (int) pageable.getOffset();
-        int end = Math.min((start + pageable.getPageSize()), availableServicesDtos.size());
-        List<AvailableServicesDto> paginatedList = availableServicesDtos.subList(start, end);
 
-        return new PageImpl<>(paginatedList, pageable, availableServicesDtos.size());
+		return availableServicesDtos;
 	}
 
 }

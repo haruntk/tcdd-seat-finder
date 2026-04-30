@@ -16,7 +16,16 @@ public class ServiceLoader {
 
     public ServiceDto loadServiceDtoFromJson() {
         try {
-            InputStream inputStream = getClass().getClassLoader().getResourceAsStream("service-information.json");
+            InputStream inputStream;
+            File externalFile = new File("service-information.json");
+
+            if (externalFile.exists()) {
+                System.out.println("Harici JSON dosyasi okunuyor: " + externalFile.getAbsolutePath());
+                inputStream = new java.io.FileInputStream(externalFile);
+            } else {
+                System.out.println("Sinif yolu (classpath) uzerinden JSON okunuyor.");
+                inputStream = getClass().getClassLoader().getResourceAsStream("service-information.json");
+            }
 
             if (inputStream == null) {
                 System.err.println("JSON dosyası bulunamadı.");

@@ -1,0 +1,19 @@
+# ======================================================================
+# TCDD SEAT FINDER - CONFIGURATION FILE
+# ======================================================================
+# Lutfen bu dosyanin adini "application.properties" olarak degistirin
+# ve kendi bilgilerinizi asagiya doldurun. Bu dosya git tarafindan 
+# takip edilmeyecektir.
+
+# 1. TCDD API TOKEN (GUNCEL OLMALIDIR)
+# Tarayicinizdan kopyaladiginiz "eyJ..." ile baslayan metni buraya yapistirin.
+tcdd.api.token=BURAYA_GUNCEL_TOKEN_GELECEK
+
+# 2. EMAIL GONDERIM AYARLARI (GMAIL)
+# Bildirimleri gonderecek olan Gmail adresi ve Uygulama Sifresi
+spring.mail.username=gonderen_email@gmail.com
+spring.mail.password=16_haneli_uygulama_sifresi
+
+# 3. KIME GONDERILECEK
+tcdd.mail.from=gonderen_email@gmail.com
+tcdd.mail.to=alici_email@gmail.com

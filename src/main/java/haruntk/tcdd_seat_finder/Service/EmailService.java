@@ -14,10 +14,16 @@ public class EmailService {
 
 	private final JavaMailSender mailSender;
 
+	@Value("${tcdd.mail.from}")
+	private String mailFrom;
+
+	@Value("${tcdd.mail.to}")
+	private String mailTo;
+
 	public void sendNotification(AvailableServicesDto dto) {
 		SimpleMailMessage msg = new SimpleMailMessage();
-		msg.setFrom("haruntkepenek@gmail.com");
-		msg.setTo("hakukpnk@gmail.com");
+		msg.setFrom(mailFrom);
+		msg.setTo(mailTo);
 		msg.setSubject("Available Train Seat");
 		msg.setText("Train " + dto.getTrainName() + " has available seats (" + dto.getAvailableSeatCount() + ").\n"
 				+ "Departure: " + dto.getDepartureStation() + " at " + dto.getDepartureTime() + "\n" + "Arrival: "

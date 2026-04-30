@@ -18,6 +18,9 @@ public class TrainService {
 	private final RestClient restClient;
 	private final EmailService mailService;
 
+	@org.springframework.beans.factory.annotation.Value("${tcdd.api.token}")
+	private String apiToken;
+
 	public ServiceResponseDto getTrainServices(ServiceDto serviceDto) {
 		ServiceRequestDto requestBody = new ServiceRequestDto();
 		requestBody.setPassengerTypeCounts(List.of(new ServiceRequestDto.PassengerTypeCount(0, 1)));
@@ -25,9 +28,22 @@ public class TrainService {
 				serviceDto.getDepartureStationName(), serviceDto.getArrivalStationId(),
 				serviceDto.getArrivalStationName(), serviceDto.getDepartureTime(), serviceDto.getArrivalTime())));
 
-		ServiceResponseDto responseBody = restClient.post().uri(url).body(requestBody).header("Authorization",
-				"eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJlVFFicDhDMmpiakp1cnUzQVk2a0ZnV196U29MQXZIMmJ5bTJ2OUg5THhRIn0.eyJleHAiOjE3MjEzODQ0NzAsImlhdCI6MTcyMTM4NDQxMCwianRpIjoiYWFlNjVkNzgtNmRkZS00ZGY4LWEwZWYtYjRkNzZiYjZlODNjIiwiaXNzIjoiaHR0cDovL3l0cC1wcm9kLW1hc3RlcjEudGNkZHRhc2ltYWNpbGlrLmdvdi50cjo4MDgwL3JlYWxtcy9tYXN0ZXIiLCJhdWQiOiJhY2NvdW50Iiwic3ViIjoiMDAzNDI3MmMtNTc2Yi00OTBlLWJhOTgtNTFkMzc1NWNhYjA3IiwidHlwIjoiQmVhcmVyIiwiYXpwIjoidG1zIiwic2Vzc2lvbl9zdGF0ZSI6IjAwYzM4NTJiLTg1YjEtNDMxNS04OGIwLWQ0MWMxMTcyYzA0MSIsImFjciI6IjEiLCJyZWFsbV9hY2Nlc3MiOnsicm9sZXMiOlsiZGVmYXVsdC1yb2xlcy1tYXN0ZXIiLCJvZmZsaW5lX2FjY2VzcyIsInVtYV9hdXRob3JpemF0aW9uIl19LCJyZXNvdXJjZV9hY2Nlc3MiOnsiYWNjb3VudCI6eyJyb2xlcyI6WyJtYW5hZ2UtYWNjb3VudCIsIm1hbmFnZS1hY2NvdW50LWxpbmtzIiwidmlldy1wcm9maWxlIl19fSwic2NvcGUiOiJvcGVuaWQgZW1haWwgcHJvZmlsZSIsInNpZCI6IjAwYzM4NTJiLTg1YjEtNDMxNS04OGIwLWQ0MWMxMTcyYzA0MSIsImVtYWlsX3ZlcmlmaWVkIjpmYWxzZSwicHJlZmVycmVkX3VzZXJuYW1lIjoid2ViIiwiZ2l2ZW5fbmFtZSI6IiIsImZhbWlseV9uYW1lIjoiIn0.AIW_4Qws2wfwxyVg8dgHRT9jB3qNavob2C4mEQIQGl3urzW2jALPx-e51ZwHUb-TXB-X2RPHakonxKnWG6tDIP5aKhiidzXDcr6pDDoYU5DnQhMg1kywyOaMXsjLFjuYN5PAyGUMh6YSOVsg1PzNh-5GrJF44pS47JnB9zk03Pr08napjsZPoRB-5N4GQ49cnx7ePC82Y7YIc-gTew2baqKQPz9_v381Gbm2V38PZDH9KldlcWut7kqQYJFMJ7dkM_entPJn9lFk7R5h5j_06OlQEpWRMQTn9SQ1AYxxmZxBu5XYMKDkn4rzIIVCkdTPJNCt5PvjENjClKFeUA1DOg")
-				.header("Unit-Id", "3895").retrieve().body(ServiceResponseDto.class);
+		ServiceResponseDto responseBody = restClient.post().uri(url).body(requestBody)
+				.header("Authorization", apiToken)
+				.header("Unit-Id", "3895")
+				.header("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/147.0.0.0 Safari/537.36 Edg/147.0.0.0")
+				.header("Accept", "application/json, text/plain, */*")
+				.header("Accept-Language", "tr")
+				.header("Origin", "https://ebilet.tcddtasimacilik.gov.tr")
+				.header("Referer", "https://ebilet.tcddtasimacilik.gov.tr/")
+				.header("Connection", "keep-alive")
+				.header("Sec-Fetch-Dest", "empty")
+				.header("Sec-Fetch-Mode", "cors")
+				.header("Sec-Fetch-Site", "same-site")
+				.header("Sec-Ch-Ua", "\"Microsoft Edge\";v=\"147\", \"Not.A/Brand\";v=\"8\", \"Chromium\";v=\"147\"")
+				.header("Sec-Ch-Ua-Mobile", "?0")
+				.header("Sec-Ch-Ua-Platform", "\"Windows\"")
+				.retrieve().body(ServiceResponseDto.class);
 
 		return responseBody;
 	}

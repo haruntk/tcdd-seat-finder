@@ -31,3 +31,7 @@ build/
 
 ### VS Code ###
 .vscode/
+
+# TCDD Seat Finder Custom Exclusions
+run/application.properties
+run/service-information.json
